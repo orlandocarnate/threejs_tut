@@ -23,40 +23,24 @@ function init() {
     document.body.appendChild(renderer.domElement);
 
     // LIGHTS
+    let light = new THREE.PointLight(0xFFFFFF, 1, 100)
+    light.position.set(4, 4, 4);
+    scene.add(light);
 
-    scene.add(new THREE.HemisphereLight(0x443333, 0x111122));
-
-    spotLight = new THREE.SpotLight(0xffffbb, 2);
-    spotLight.position.set(0.5, 0, 1);
-    spotLight.position.multiplyScalar(700);
-    scene.add(spotLight);
-
-    spotLight.castShadow = true;
-
-    spotLight.shadow.mapSize.width = 2048;
-    spotLight.shadow.mapSize.height = 2048;
-
-    spotLight.shadow.camera.near = 200;
-    spotLight.shadow.camera.far = 1500;
-
-    spotLight.shadow.camera.fov = 40;
-
-    spotLight.shadow.bias = - 0.005;
-
-    //
 
     // --- Cube mesh ---
     const geometry = new THREE.BoxGeometry(2, 2, 2);
-    // const material = new THREE.MeshBasicMaterial({
-    //     color: 0x00ff00
+    // const material = new THREE.MeshLambertMaterial({
+    //     color: 0x555555
     // });
 
-    const texture = new THREE.TextureLoader().load('textures/crate.gif');
-    const bump = new THREE.TextureLoader().load('textures/brick_bump.gif');
-    const material = new THREE.MeshBasicMaterial({
+
+    const texture = new THREE.TextureLoader().load('textures/antique-grate1-albedo.png');
+    // var bumpMap = THREE.ImageUtils.loadTexture("textures/brick_bump.jpg")
+    const bumpMap = new THREE.TextureLoader().load('textures/antique-grate1-normal-ogl.png');
+    const material = new THREE.MeshPhongMaterial({
         map: texture,
-        bumpMap: bump,
-        bumpScale: 120
+        normalMap: bumpMap,
     });
 
     cube = new THREE.Mesh(geometry, material);
